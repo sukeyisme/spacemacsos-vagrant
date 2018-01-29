@@ -1,4 +1,9 @@
 Vagrant.configure("2") do |config|
+  if Vagrant.has_plugin?("vagrant-proxyconf")
+    config.proxy.http     = "http://10.0.2.2:4411/"
+    config.proxy.https    = "http://10.0.2.2:4411/"
+    config.proxy.no_proxy = "localhost,127.0.0.1"
+  end
   config.vm.box = "hodge/spacemacs-os"
   config.vm.box_check_update = true
   config.vm.provider "virtualbox" do |vb|
@@ -20,7 +25,7 @@ Vagrant.configure("2") do |config|
         echo SigLevel = Never >> /etc/pacman.conf
         echo Server = http://repo.archlinux.fr/'$'arch >> /etc/pacman.conf
         pacman -Syu --noconfirm
-        pacman -S git emacs xorg-xinit xorg-server xorg-xset yaourt fakeroot --noconfirm
+        pacman -S git emacs xorg-xinit xorg-server xorg-xset yaourt fakeroot adobe-source-code-pro-fonts --noconfirm
         cp /usr/lib/systemd/system/getty@.service /usr/lib/systemd/system/autologin@.service
         sed -i 's@ExecStart.*@ExecStart=-/sbin/agetty --noclear -a vagrant %I 38400 linux@g' /usr/lib/systemd/system/autologin@.service
         systemctl disable getty@tty1
