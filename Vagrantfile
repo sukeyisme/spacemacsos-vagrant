@@ -45,6 +45,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "systemd-setup", type:"shell" do |s|
     s.inline = <<-SHELL
         systemctl enable xlogin@vagrant
+        systemctl reboot
       SHELL
   end
   config.vm.provision "root", type:"shell",run:"always" do |s|
