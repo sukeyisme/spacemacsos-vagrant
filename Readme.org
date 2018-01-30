@@ -2,3 +2,24 @@
 ** 1.who want to try spacemacs immediately
 ** 2.who want to use spacemacs to develop on multi operator system
 ** 3.who donot want to always change the development environment
+* how to use
+** Vagrantfile
+
+   #+BEGIN_SRC ruby
+     Vagrant.configure("2") do |config|
+       config.vm.box = "hodge/spacemacs-os"
+       config.ssh.username = "vagrant"
+       config.ssh.password = "vagrant"
+       config.vm.provider "virtualbox" do |vb|
+         vb.gui = true
+         vb.name = "spacemacsOS"
+       end
+  
+     end
+
+   #+END_SRC
+** then run in shell
+   #+BEGIN_SRC sh
+     vagrant up
+   #+END_SRC
+
