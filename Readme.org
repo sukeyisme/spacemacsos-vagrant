@@ -1,0 +1,4 @@
+* This Box is for those:
+** 1.who want to try spacemacs immediately
+** 2.who want to use spacemacs to develop on multi operator system
+** 3.who donot want to always change the development environment
