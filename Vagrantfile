@@ -1,9 +1,4 @@
 Vagrant.configure("2") do |config|
-  if Vagrant.has_plugin?("vagrant-proxyconf")
-    config.proxy.http     = "http://10.0.2.2:4411/"
-    config.proxy.https    = "http://10.0.2.2:4411/"
-    config.proxy.no_proxy = "localhost,127.0.0.1"
-  end
   config.vm.box = "hodge/spacemacs-os"
   config.vm.box_check_update = true
   config.vm.provider "virtualbox" do |vb|
