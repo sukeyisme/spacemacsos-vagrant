@@ -2,7 +2,7 @@
 ** 1.who want to try spacemacs immediately
 ** 2.who want to use spacemacs to develop on multi operator system
 ** 3.who donot want to always change the development environment
-* how to use
+* How to use
 ** Vagrantfile
 
    #+BEGIN_SRC ruby
@@ -22,4 +22,62 @@
    #+BEGIN_SRC sh
      vagrant up
    #+END_SRC
+* How to restore vagrant VM data
+  Before you use a new version vagrant box or recreate a new VM ,you will destroy your previous VM.So you will lost all your data in previous VM.
+We're going to use two tools.
+** [[https://github.com/emyl/vagrant-triggers][vagrant-triggers]]
+
+   #+BEGIN_SRC sh
+     vagrant plugin install vagrant-triggers
+   #+END_SRC
+
+   Befors destroy: 
+   
+   #+BEGIN_SRC ruby
+
+     config.trigger.before :destroy do
+       info "do backup"
+             run_remote "..."
+     end
+   #+END_SRC
+   
+   After first Vagrant up:
+   
+   #+BEGIN_SRC ruby
+
+     config.vm.provision "first up", type:"shell" do |s|
+       s.privileged = false
+       s.inline = <<-SHELL
+           echo "do restore"
+           SHELL
+     end
+   #+END_SRC
+
+** [[https://github.com/TheLocehiliosan/yadm][yadm]]
+  We will create two repository. One for home config which can be public and another for must be private.
+  You can create alias for those two.
+
+  #+BEGIN_SRC sh
+    # public
+    alias y=yadm
+    # private
+    alias py="yadm -Y ~/.pyadm"
+  #+END_SRC
+
+  And then init your repository
+
+  #+BEGIN_SRC sh
+    y init #public
+    py init # private 
+  #+END_SRC
+
+  If you want to track system level files,you sould create another two repository.
+  The only different is to set workdir
+
+  #+BEGIN_SRC sh
+    alias sy = "sudo yadm -Y /.yadm"
+    alias psy = "sudo yadm -Y /.pyadm"
+    sy init -w /
+    sy init -w /
+  #+END_SRC
 
