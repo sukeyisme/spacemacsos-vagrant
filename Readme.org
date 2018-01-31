@@ -13,8 +13,16 @@
        config.vm.provider "virtualbox" do |vb|
          vb.gui = true
          vb.name = "spacemacsOS"
+         vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
+         vb.customize ['setextradata', :id, 'GUI/HiDPI/UnscaledOutput', '1']
+         vb.customize ['setextradata', :id, 'GUI/Fullscreen', "on"]
+         vb.customize ["modifyvm", :id, "--vram", "128"]
+         vb.customize ["modifyvm", :id, "--memory", 4096]
+         vb.customize ["modifyvm", :id, "--cpus", "2"]
+         vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
+         vb.customize ["modifyvm", :id, "--draganddrop", "bidirectional"]
        end
-  
+
      end
 
    #+END_SRC
