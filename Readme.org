@@ -22,7 +22,16 @@
          vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
          vb.customize ["modifyvm", :id, "--draganddrop", "bidirectional"]
        end
-
+       config.trigger.before :destroy do
+         info "do backup"
+             run_remote "..."
+       end
+       config.vm.provision "first up", type:"shell" do |s|
+         s.privileged = false
+         s.inline = <<-SHELL
+            echo "do restore"
+         SHELL
+       end
      end
 
    #+END_SRC
