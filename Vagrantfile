@@ -10,12 +10,8 @@ Vagrant.configure("2") do |config|
     s.privileged = false
     s.inline = <<-SHELL
       yaourt -S yadm-git oh-my-zsh-git zsh-autosuggestions zsh-history-substring-search --noconfirm
-      yaourt -G xlogin-git
-      sed -i "s/^depends.*/depends=(\"systemd\" \"xorg-server\" \"zsh\")/g" xlogin-git/PKGBUILD
-      sed -i "s@make.*@make DESTDIR=\"\$pkgdir\" BASH=\"/usr/bin/zsh\" install@g" xlogin-git/PKGBUILD
-      yaourt -P xlogin-git --noconfirm
       yaourt -Scc --noconfirm
-      yadm clone https://github.com/sukeyisme/dotfiles.git
+      yadm --no-bootstrap clone https://github.com/sukeyisme/dotfiles.git
       spacemacs_dir=/home/vagrant/.emacs.d
       spacemacs_private_dir=/home/vagrant/.spacemacs.d
       spacemacs_packages_dir=/home/vagrant/.emacs.d/elpa
@@ -27,7 +23,7 @@ Vagrant.configure("2") do |config|
   end
   config.vm.provision "package-root", type:"shell" do |s|
     s.inline = <<-SHELL
-      pacman -S wqy-zenhei ttf-dejavu zsh zsh-syntax-highlighting fzf tmux --noconfirm
+      pacman -S wqy-zenhei ttf-dejavu zsh-syntax-highlighting fzf --noconfirm
       pacman -Scc --noconfirm
       rm -rf /var/log/journal/* /var/log/old/* /var/log/faillog /var/log/lastlog /var/log/pacman.log
       rm -f /home/vagrant/.bash_history
