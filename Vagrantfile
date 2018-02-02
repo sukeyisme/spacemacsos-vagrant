@@ -11,7 +11,7 @@ Vagrant.configure("2") do |config|
     s.inline = <<-SHELL
       yaourt -S yadm-git oh-my-zsh-git zsh-autosuggestions zsh-history-substring-search --noconfirm
       yaourt -Scc --noconfirm
-      yadm --no-bootstrap clone https://github.com/sukeyisme/dotfiles.git
+      yadm clone https://github.com/sukeyisme/dotfiles.git --no-bootstrap
       spacemacs_dir=/home/vagrant/.emacs.d
       spacemacs_private_dir=/home/vagrant/.spacemacs.d
       spacemacs_packages_dir=/home/vagrant/.emacs.d/elpa
