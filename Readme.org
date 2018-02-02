@@ -6,41 +6,47 @@
 ** Vagrantfile
 
    #+BEGIN_SRC ruby
-        Vagrant.configure("2") do |config|
-          config.vm.box = "hodge/spacemacs-os"
-          config.ssh.username = "vagrant"
-          config.ssh.password = "vagrant"
-          config.vm.provider "virtualbox" do |vb|
-            vb.gui = true
-            vb.name = "spacemacsOS"
-            vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
-            vb.customize ['setextradata', :id, 'GUI/HiDPI/UnscaledOutput', '1']
-            vb.customize ['setextradata', :id, 'GUI/Fullscreen', "on"]
-            vb.customize ["modifyvm", :id, "--vram", "128"]
-            vb.customize ["modifyvm", :id, "--memory", 4096]
-            vb.customize ["modifyvm", :id, "--cpus", "2"]
-            vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
-            vb.customize ["modifyvm", :id, "--draganddrop", "bidirectional"]
-          end
-          config.trigger.before :destroy do
-            info "do backup"
-                run_remote "..."
-          end
-          config.trigger.before :destroy do
-            info "do backup"
-                run_remote "..."
-          end
-          config.trigger.before :reload do
-            info "do backup"
-                run_remote "..."
-          end
-          config.vm.provision "first up", type:"shell" do |s|
-            s.privileged = false
-            s.inline = <<-SHELL
-               echo "do restore"
-            SHELL
-          end
-        end
+     Vagrant.configure("2") do |config|
+       config.vm.box = "hodge/spacemacs-os"
+       config.ssh.username = "vagrant"
+       config.ssh.password = "vagrant"
+       config.vm.synced_folder "Downloads", "/home/vagrant/Downloads"
+       config.vm.synced_folder "Documents", "/home/vagrant/Documents"
+       config.vm.synced_folder "Music", "/home/vagrant/Music"
+       config.vm.synced_folder "Movies", "/home/vagrant/Movies"
+       config.vm.synced_folder "Pictures", "/home/vagrant/Pictures"
+       config.vm.synced_folder "Desktop", "/home/vagrant/Desktop"
+       config.vm.provider "virtualbox" do |vb|
+         vb.gui = true
+         vb.name = "spacemacsOS"
+         vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
+         vb.customize ['setextradata', :id, 'GUI/HiDPI/UnscaledOutput', '1']
+         vb.customize ['setextradata', :id, 'GUI/Fullscreen', "on"]
+         vb.customize ["modifyvm", :id, "--vram", "128"]
+         vb.customize ["modifyvm", :id, "--memory", 4096]
+         vb.customize ["modifyvm", :id, "--cpus", "2"]
+         vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
+         vb.customize ["modifyvm", :id, "--draganddrop", "bidirectional"]
+       end
+       config.trigger.before :halt do
+          info "do backup"
+          # run_remote  ""
+       end
+       config.trigger.before :destroy do
+         info "do backup"
+         # run_remote  ""
+       end
+       config.trigger.before :reload do
+         info "do backup"
+         # run_remote  ""
+       end
+       config.vm.provision "first up", type:"shell" do |s|
+         s.privileged = false
+         s.inline = <<-SHELL
+                 echo "do restore"
+              SHELL
+       end
+     end
 
    #+END_SRC
 ** then run in shell
